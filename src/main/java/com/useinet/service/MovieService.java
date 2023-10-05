@@ -35,11 +35,12 @@ public class MovieService {
         Set<String> prods = map.keySet();
         List<Interval> intervals = new ArrayList<>();
         for (String producer : prods) {
-            List<Integer> years = map.get(producer).stream().toList();
-            if (years.size() > 1) {
+            List<Integer> years = new ArrayList<>(map.get(producer).stream().toList());
+            for (Iterator<Integer> iterator = years.iterator(); iterator.hasNext() && years.size() > 1; ) {
                 int i = years.get(1) - years.get(0);
                 Interval interval = new Interval(producer, i, years.get(0), years.get(1));
                 intervals.add(interval);
+                years.remove(0);
             }
         }
         SortedSet<Integer> its = intervals.stream().map(Interval::getInterval).collect(Collectors.toCollection(TreeSet::new));
