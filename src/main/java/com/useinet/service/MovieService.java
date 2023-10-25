@@ -35,7 +35,7 @@ public class MovieService {
         Set<String> prods = map.keySet();
         List<Interval> intervals = new ArrayList<>();
         for (String producer : prods) {
-            List<Integer> years = new ArrayList<>(map.get(producer).stream().toList());
+            List<Integer> years = new ArrayList<>(map.get(producer).stream().sorted().toList());
             for (Iterator<Integer> iterator = years.iterator(); iterator.hasNext() && years.size() > 1; ) {
                 int i = years.get(1) - years.get(0);
                 Interval interval = new Interval(producer, i, years.get(0), years.get(1));

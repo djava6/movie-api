@@ -27,17 +27,11 @@ public class MovieControllerTest {
     @BeforeEach
     void setUp() {
         RestAssured.baseURI = "http://localhost:" + port;
-        movieRepository.deleteAll();
-        Movie m1 = new Movie(1980, "Friday the 13th", "Associated Film Distribution", "Allan Carr", "yes");
-        Movie m2 = new Movie(1981, "Friday the 13th", "Associated Film Distribution", "Allan Carr", "yes");
-        Movie m3 = new Movie(1985, "Friday the 13th 2", "Associated Film Distribution", "Allan", "yes");
-        Movie m4 = new Movie(1989, "Friday the 13th 2", "Associated Film Distribution", "Allan", "yes");
-        movieRepository.saveAll(List.of(m1, m2, m3, m4));
     }
 
     @Test
     void testFindInterval() {
-        String result = "{min=[{producer=Allan Carr, interval=1, previousWin=1980, followingWin=1981}], max=[{producer=Allan, interval=4, previousWin=1985, followingWin=1989}]}";
+        String result = "{min=[{producer=Joel Silver, interval=1, previousWin=1990, followingWin=1991}], max=[{producer=Matthew Vaughn, interval=13, previousWin=2002, followingWin=2015}]}";
         given().contentType(ContentType.JSON).when().get("/movies/find/interval").then().statusCode(200).contentType(ContentType.JSON).body(".", hasToString(result));
     }
 }
